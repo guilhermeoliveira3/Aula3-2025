@@ -116,6 +116,7 @@ void check_new_commands(queue_t *command_queue, queue_t *blocked_queue, queue_t 
         DBG("[Scheduler] New client connected: fd=%d\n", client_fd);
         // New PCBs do not have a time yet, will be set when we receive a RUN message
         pcb_t *pcb = new_pcb(++PID, client_fd, 0);
+        pcb->priority = 0;
         enqueue_pcb(command_queue, pcb);
     } while (client_fd > 0);
 
@@ -236,8 +237,8 @@ void check_blocked_queue(queue_t * blocked_queue, queue_t * command_queue, uint3
 
 static const char *SCHEDULER_NAMES[] = {
     "FIFO",
-    "RR",
     "SJF",
+    "RR",
     "MLFQ",
     NULL
 };
@@ -322,6 +323,7 @@ int main(int argc, char *argv[]) {
             }
             case SCHED_MLFQ:{
                 mlfq_scheduler(current_time_ms, &ready_queue, &CPU);
+                break;
             }
             default:{
                 printf("Unknown scheduler type\n");

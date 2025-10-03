@@ -138,6 +138,7 @@ int main(int argc, char *argv[]) {
         cpu_duration_ms += active_burst->burst_time_ms;
 
         if (active_burst->block_time_ms > 0) {
+            printf("Sending BLOCK request for %u ms\n", active_burst->block_time_ms);
             if (handle_process_requests(sockfd, pid, app_name, active_burst, PROCESS_REQUEST_BLOCK, &start_time_ms, &sim_clock_ms) == process_error)
                 break;
             block_duration_ms += active_burst->block_time_ms;
