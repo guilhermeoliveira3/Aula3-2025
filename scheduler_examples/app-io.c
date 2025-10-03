@@ -89,6 +89,7 @@ process_status_en handle_process_requests(int sockfd, const pid_t pid, const cha
  * Run like: ./app-pre <burst-file.csv>
  */
 int main(int argc, char *argv[]) {
+    setvbuf(stdout, NULL, _IONBF, 0);
     if (argc != 2) {
         printf("Usage: %s <burst-file.csv>\n", argv[0]);
         exit(EXIT_FAILURE);
